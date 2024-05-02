@@ -43,7 +43,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<AuthorDTO> getAllAuthors() {
-        List<Author> authors = authorRepository.findAll();
+        List<Author> authors = authorRepository.findAllByDeletedFalse();
         return authors.stream().map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -67,7 +67,7 @@ public class AuthorServiceImpl implements AuthorService {
 
 
     private Author getAuthor(Long id){
-        return authorRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException(id+" id'li ürün bulunamadı!"));
+        return authorRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(()->new IllegalArgumentException(id+" id'li yazar bulunamadı!"));
     }
 }

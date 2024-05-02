@@ -14,4 +14,5 @@ public interface AuthorService {
     AuthorDTO updateAuthor(Long id, AuthorDTO authorDTO);
 
     void deleteAuthor(Long id);
+
 }

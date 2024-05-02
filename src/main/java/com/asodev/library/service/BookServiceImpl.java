@@ -32,7 +32,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDTO> getAllBooks(){
-        List<Book> books = bookRepository.findAll();
+        List<Book> books = bookRepository.findAllByDeletedFalse();
         return books.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
@@ -43,7 +43,7 @@ public class BookServiceImpl implements BookService {
     }
     @Override
     public List<BookDTO> getBooksByName(String title){
-        List<Book> books = bookRepository.findByTitleContainingIgnoreCase(title);
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCaseAndDeletedFalse(title);
         return books.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -51,7 +51,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDTO> getBooksByAuthorName(String authorFirstName, String authorLastName) {
-        List<Book> books = bookRepository.findByAuthorFirstNameAndAuthorLastNameIgnoreCase(authorFirstName, authorLastName);
+        List<Book> books = bookRepository.findByAuthorFirstNameAndAuthorLastNameIgnoreCaseAndDeletedFalse(authorFirstName, authorLastName);
         return books.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -59,7 +59,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDTO> searchBooks(String searchParam){
-        List<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrAuthorFirstNameContainingIgnoreCaseOrAuthorLastNameContainingIgnoreCase(searchParam,searchParam,searchParam);
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrAuthorFirstNameContainingIgnoreCaseOrAuthorLastNameContainingIgnoreCaseAndDeletedFalse(searchParam,searchParam,searchParam);
         return books.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -100,7 +100,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(book);
     }
     private Book getBook(Long id) {
-        return bookRepository.findById(id)
+        return bookRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new IllegalArgumentException(id + "id'li kitap bulunamadı."));
     }
 }
