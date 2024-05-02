@@ -1,6 +1,5 @@
 package com.asodev.library.controller;
 
-import com.asodev.library.controller.interfaces.AuthorController;
 import com.asodev.library.dto.AuthorDTO;
 import com.asodev.library.service.interfaces.AuthorService;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/authors")
-public class AuthorController implements AuthorController {
+public class AuthorController  {
 
     private final AuthorService authorService;
 
