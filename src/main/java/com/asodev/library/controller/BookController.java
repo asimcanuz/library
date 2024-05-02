@@ -1,6 +1,5 @@
 package com.asodev.library.controller;
 
-import com.asodev.library.controller.interfaces.BookController;
 import com.asodev.library.dto.BookDTO;
 import com.asodev.library.service.interfaces.BookService;
 import org.springframework.http.HttpStatus;
@@ -10,11 +9,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
-public class BookControllerImpl implements BookController {
+public class BookController{
 
     private final BookService bookService;
 
-    public BookControllerImpl(BookService bookService) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 

@@ -12,11 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/authors")
-public class AuthorControllerImpl implements AuthorController {
+public class AuthorController implements AuthorController {
 
     private final AuthorService authorService;
 
-    public AuthorControllerImpl(AuthorService authorService) {
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 
