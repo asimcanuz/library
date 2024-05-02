@@ -1,12 +1,12 @@
 package com.asodev.library.dto;
 
-public class CreateAuthorDto {
+public class CreateAuthorDTO {
     private String firstName;
     private String lastName;
 
-    public CreateAuthorDto() {
+    public CreateAuthorDTO() {
     }
-    public CreateAuthorDto(String firstName, String lastName) {
+    public CreateAuthorDTO(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }

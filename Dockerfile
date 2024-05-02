@@ -10,16 +10,19 @@ ENV POSTGRES_PASSWORD=mypassword
 EXPOSE 5432
 
 # Base image for Java application
-FROM adoptopenjdk:17-jre-hotspot
+FROM adoptium/openjdk:17-slim
 
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy the JAR file into the container
-COPY target/library.jar /app/library.jar
+## Copy application code
+COPY . .
+
+# Install Maven dependencies (adjust based on your build tool)
+RUN mvn clean install
 
 # Expose the port your application runs on
-EXPOSE 9090
+EXPOSE 8080
 
 # Command to run the application
 CMD ["java", "-jar", "library.jar"]

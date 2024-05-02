@@ -1,7 +1,7 @@
 package com.asodev.library.controller;
 
 import com.asodev.library.dto.AuthorDTO;
-import com.asodev.library.dto.CreateAuthorDto;
+import com.asodev.library.dto.CreateAuthorDTO;
 import com.asodev.library.service.interfaces.AuthorService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class AuthorController  {
 
     @Operation(summary = "Yeni yazar ekle")
     @PostMapping
-    public ResponseEntity<AuthorDTO> createAuthor(@RequestBody CreateAuthorDto createAuthorDto) {
+    public ResponseEntity<AuthorDTO> createAuthor(@RequestBody CreateAuthorDTO createAuthorDto) {
         AuthorDTO createdAuthor = authorService.createAuthor(createAuthorDto);
         return new ResponseEntity<>(createdAuthor, HttpStatus.CREATED);
     }

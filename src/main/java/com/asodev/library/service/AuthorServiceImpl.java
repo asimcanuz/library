@@ -1,7 +1,7 @@
 package com.asodev.library.service;
 
 import com.asodev.library.dto.AuthorDTO;
-import com.asodev.library.dto.CreateAuthorDto;
+import com.asodev.library.dto.CreateAuthorDTO;
 import com.asodev.library.model.Author;
 import com.asodev.library.repository.AuthorRepository;
 import com.asodev.library.service.interfaces.AuthorService;
@@ -23,7 +23,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDTO createAuthor(CreateAuthorDto createAuthorDto) {
+    public AuthorDTO createAuthor(CreateAuthorDTO createAuthorDto) {
         Author author = modelMapper.map(createAuthorDto,Author.class);
         author = authorRepository.save(author);
         return modelMapper.map(author,AuthorDTO.class);
