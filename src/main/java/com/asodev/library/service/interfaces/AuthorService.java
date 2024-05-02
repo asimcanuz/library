@@ -1,11 +1,12 @@
 package com.asodev.library.service.interfaces;
 
 import com.asodev.library.dto.AuthorDTO;
+import com.asodev.library.dto.CreateAuthorDto;
 
 import java.util.List;
 
 public interface AuthorService {
-    AuthorDTO createAuthor(AuthorDTO authorDTO);
+    AuthorDTO createAuthor(CreateAuthorDto createAuthorDto);
 
     AuthorDTO getAuthorById(Long id);
 

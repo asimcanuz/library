@@ -1,6 +1,7 @@
 package com.asodev.library.service;
 
 import com.asodev.library.dto.AuthorDTO;
+import com.asodev.library.dto.CreateAuthorDto;
 import com.asodev.library.model.Author;
 import com.asodev.library.repository.AuthorRepository;
 import com.asodev.library.service.interfaces.AuthorService;
@@ -21,30 +22,23 @@ public class AuthorServiceImpl implements AuthorService {
         this.modelMapper = modelMapper;
     }
 
-    private AuthorDTO convertToDto(Author author){
-        return modelMapper.map(author,AuthorDTO.class);
-    }
-    private Author convertToEntity(AuthorDTO authorDTO){
-        return modelMapper.map(authorDTO,Author.class);
-    }
-
     @Override
-    public AuthorDTO createAuthor(AuthorDTO authorDTO) {
-        Author author = convertToEntity(authorDTO);
+    public AuthorDTO createAuthor(CreateAuthorDto createAuthorDto) {
+        Author author = modelMapper.map(createAuthorDto,Author.class);
         author = authorRepository.save(author);
-        return convertToDto(author);
+        return modelMapper.map(author,AuthorDTO.class);
     }
 
     @Override
     public AuthorDTO getAuthorById(Long id) {
         Author author = getAuthor(id);
-        return convertToDto(author);
+        return modelMapper.map(author,AuthorDTO.class);
     }
 
     @Override
     public List<AuthorDTO> getAllAuthors() {
         List<Author> authors = authorRepository.findAllByDeletedFalse();
-        return authors.stream().map(this::convertToDto)
+        return authors.stream().map(author -> modelMapper.map(author,AuthorDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -55,7 +49,7 @@ public class AuthorServiceImpl implements AuthorService {
         author.setLastName(authorDTO.getLastName());
         author = authorRepository.save(author);
 
-        return convertToDto(author);
+        return modelMapper.map(author,AuthorDTO.class);
     }
 
     @Override
