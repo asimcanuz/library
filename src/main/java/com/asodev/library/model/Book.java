@@ -35,53 +35,51 @@ public class Book {
         return id;
     }
 
-    public Book setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public Book setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
-        return this;
+
     }
 
     public LocalDate getYearPublished() {
         return yearPublished;
     }
 
-    public Book setYearPublished(LocalDate yearPublished) {
+    public void setYearPublished(LocalDate yearPublished) {
         this.yearPublished = yearPublished;
-        return this;
+
     }
 
     public int getStock() {
         return stock;
     }
 
-    public Book setStock(int stock) {
+    public void setStock(int stock) {
         this.stock = stock;
-        return this;
+
     }
 
     public Author getAuthor() {
         return author;
     }
 
-    public Book setAuthor(Author author) {
+    public void setAuthor(Author author) {
         this.author = author;
-        return this;
+
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public Book setDeleted(boolean deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-        return this;
     }
 }

@@ -16,49 +16,55 @@ public class Author {
     @OneToMany(mappedBy = "author")
     private List<Book> books;
 
+    private boolean deleted = false;
+
     public Author() {
     }
 
-    public Author(Long id, String firstName, String lastName,List<Book> books) {
+    public Author(Long id, String firstName, String lastName,List<Book> books,boolean deleted) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.books = books;
+        this.deleted = deleted;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Author setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public Author setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
-        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public Author setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
-        return this;
     }
 
     public List<Book> getBooks() {
         return books;
     }
 
-    public Author setBooks(List<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
-        return this;
+    }
+
+    public boolean getDeleted(){
+        return deleted;
+    }
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }
