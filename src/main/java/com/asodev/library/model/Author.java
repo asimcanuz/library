@@ -52,4 +52,13 @@ public class Author {
         this.lastName = lastName;
         return this;
     }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public Author setBooks(List<Book> books) {
+        this.books = books;
+        return this;
+    }
 }

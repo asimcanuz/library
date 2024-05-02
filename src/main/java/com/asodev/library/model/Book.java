@@ -17,14 +17,18 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
+    private boolean deleted=false;
+
     public Book() {
     }
 
-    public Book(Long id, String title, LocalDate yearPublished, int stock) {
+    public Book(Long id, String title, LocalDate yearPublished, int stock, Author author, boolean deleted) {
         this.id = id;
         this.title = title;
         this.yearPublished = yearPublished;
         this.stock = stock;
+        this.author = author;
+        this.deleted = deleted;
     }
 
     public Long getId() {
@@ -63,5 +67,21 @@ public class Book {
         return this;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
 
+    public Book setAuthor(Author author) {
+        this.author = author;
+        return this;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public Book setDeleted(boolean deleted) {
+        this.deleted = deleted;
+        return this;
+    }
 }
