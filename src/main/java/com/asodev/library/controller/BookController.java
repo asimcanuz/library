@@ -1,6 +1,7 @@
 package com.asodev.library.controller;
 
 import com.asodev.library.dto.BookDTO;
+import com.asodev.library.dto.CreateBookDTO;
 import com.asodev.library.service.interfaces.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,7 @@ public class BookController{
 
     @Operation(summary = "Kitap oluştur")
     @PostMapping
-    public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO bookDTO) {
+    public ResponseEntity<BookDTO> createBook(@RequestBody CreateBookDTO bookDTO) {
         BookDTO createdBook = bookService.createBook(bookDTO);
         return new ResponseEntity<>(createdBook, HttpStatus.CREATED);
     }

@@ -3,6 +3,7 @@ package com.asodev.library.service;
 
 import com.asodev.library.dto.AuthorDTO;
 import com.asodev.library.dto.BookDTO;
+import com.asodev.library.dto.CreateBookDTO;
 import com.asodev.library.model.Author;
 import com.asodev.library.model.Book;
 import com.asodev.library.repository.BookRepository;
@@ -23,29 +24,23 @@ public class BookServiceImpl implements BookService {
         this.modelMapper = modelMapper;
     }
 
-    private BookDTO convertToDto(Book book){
-        return modelMapper.map(book,BookDTO.class);
-    }
-    private Book convertToEntity(BookDTO bookDTO){
-        return modelMapper.map(bookDTO,Book.class);
-    }
-
     @Override
     public List<BookDTO> getAllBooks(){
         List<Book> books = bookRepository.findAllByDeletedFalse();
-        return books.stream().map(this::convertToDto).collect(Collectors.toList());
+        return books.stream().map(book -> modelMapper.map(book,BookDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override
     public BookDTO getBookById(Long id){
         Book book = getBook(id);
-        return convertToDto(book);
+        return modelMapper.map(book,BookDTO.class);
     }
     @Override
     public List<BookDTO> getBooksByName(String title){
         List<Book> books = bookRepository.findByTitleContainingIgnoreCaseAndDeletedFalse(title);
         return books.stream()
-                .map(this::convertToDto)
+                .map(book -> this.modelMapper.map(book,BookDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -53,7 +48,7 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> getBooksByAuthorName(String authorFirstName, String authorLastName) {
         List<Book> books = bookRepository.findByAuthorFirstNameAndAuthorLastNameIgnoreCaseAndDeletedFalse(authorFirstName, authorLastName);
         return books.stream()
-                .map(this::convertToDto)
+                .map(book -> modelMapper.map(book,BookDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -61,16 +56,16 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> searchBooks(String searchParam){
         List<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrAuthorFirstNameContainingIgnoreCaseOrAuthorLastNameContainingIgnoreCaseAndDeletedFalse(searchParam,searchParam,searchParam);
         return books.stream()
-                .map(this::convertToDto)
+                .map(book -> modelMapper.map(book,BookDTO.class))
                 .collect(Collectors.toList());
     }
 
 
     @Override
-    public BookDTO createBook(BookDTO bookDTO) {
-        Book book = convertToEntity(bookDTO);
+    public BookDTO createBook(CreateBookDTO bookDTO) {
+        Book book = modelMapper.map(bookDTO,Book.class);
         book = bookRepository.save(book);
-        return convertToDto(book);
+        return modelMapper.map(book,BookDTO.class);
     }
 
     @Override
@@ -90,7 +85,7 @@ public class BookServiceImpl implements BookService {
         book.setAuthor(author);
         // Save the updated book
         book = bookRepository.save(book);
-        return convertToDto(book);
+        return modelMapper.map(book,BookDTO.class);
     }
 
     @Override

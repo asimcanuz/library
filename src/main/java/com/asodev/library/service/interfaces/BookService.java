@@ -1,6 +1,7 @@
 package com.asodev.library.service.interfaces;
 
 import com.asodev.library.dto.BookDTO;
+import com.asodev.library.dto.CreateBookDTO;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface BookService {
 
     List<BookDTO> searchBooks(String searchTerm);
 
-    BookDTO createBook(BookDTO bookDTO);
+    BookDTO createBook(CreateBookDTO createBookDTO);
 
     BookDTO updateBook(Long id, BookDTO bookDTO);
 
