@@ -37,53 +37,47 @@ public class Loan {
         return id;
     }
 
-    public Loan setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public Member getMember() {
         return member;
     }
 
-    public Loan setMember(Member member) {
+    public void setMember(Member member) {
         this.member = member;
-        return this;
     }
 
     public Book getBook() {
         return book;
     }
 
-    public Loan setBook(Book book) {
+    public void setBook(Book book) {
         this.book = book;
-        return this;
     }
 
     public LocalDate getLoanDate() {
         return loanDate;
     }
 
-    public Loan setLoanDate(LocalDate loanDate) {
+    public void setLoanDate(LocalDate loanDate) {
         this.loanDate = loanDate;
-        return this;
     }
 
     public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public Loan setDueDate(LocalDate dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
-        return this;
     }
 
     public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public Loan setReturnDate(LocalDate returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
-        return this;
     }
 }
