@@ -5,10 +5,12 @@ import com.asodev.library.model.Author;
 import com.asodev.library.repository.AuthorRepository;
 import com.asodev.library.service.interfaces.AuthorService;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
@@ -58,15 +60,14 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteAuthor(Long id) {
-
+        Author author = getAuthor(id);
+        author.setDeleted(true);
+        authorRepository.save(author);
     }
 
 
     private Author getAuthor(Long id){
-        Author author = authorRepository.findById(id)
+        return authorRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException(id+" id'li ürün bulunamadı!"));
-        return author;
     }
-
-
 }
