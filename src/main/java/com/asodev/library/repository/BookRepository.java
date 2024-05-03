@@ -14,8 +14,8 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     List<Book> findAllByDeletedFalse();
     List<Book> findByTitleContainingIgnoreCaseAndDeletedFalse(String title);
 
-    List<Book> findByAuthorFirstNameAndAuthorLastNameIgnoreCaseAndDeletedFalse(String authorFirstName, String authorLastName);
+    List<Book> findByAuthorNameIgnoreCaseAndDeletedFalse(String authorName);
 
-    List<Book> findByTitleContainingIgnoreCaseOrAuthorFirstNameContainingIgnoreCaseOrAuthorLastNameContainingIgnoreCaseAndDeletedFalse(String title, String authorFirstName, String authorLastName);
+    List<Book> findByTitleContainingIgnoreCaseOrAuthorNameContainingIgnoreCaseAndDeletedFalse(String title, String authorName);
 
 }

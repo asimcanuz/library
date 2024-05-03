@@ -41,8 +41,8 @@ public class BookController{
 
     @Operation(summary = "Kitapları yazara göre getir")
     @GetMapping("/author")
-    public ResponseEntity<List<BookDTO>> getBooksByAuthorName(@RequestParam String authorFirstName, @RequestParam String authorLastName) {
-        List<BookDTO> books = bookService.getBooksByAuthorName(authorFirstName, authorLastName);
+    public ResponseEntity<List<BookDTO>> getBooksByAuthorName(@RequestParam String authorName) {
+        List<BookDTO> books = bookService.getBooksByAuthorName(authorName);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 

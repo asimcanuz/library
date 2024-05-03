@@ -45,15 +45,15 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
-    public List<BookDTO> getBooksByAuthorName(String authorFirstName, String authorLastName) {
-        List<Book> books = bookRepository.findByAuthorFirstNameAndAuthorLastNameIgnoreCaseAndDeletedFalse(authorFirstName, authorLastName);
+    public List<BookDTO> getBooksByAuthorName(String authorName) {
+        List<Book> books = bookRepository.findByAuthorNameIgnoreCaseAndDeletedFalse(authorName);
         return books.stream()
                 .map(book -> modelMapper.map(book,BookDTO.class))
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> searchBooks(String searchParam){
-        List<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrAuthorFirstNameContainingIgnoreCaseOrAuthorLastNameContainingIgnoreCaseAndDeletedFalse(searchParam,searchParam,searchParam);
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrAuthorNameContainingIgnoreCaseAndDeletedFalse(searchParam,searchParam);
         return books.stream()
                 .map(book -> modelMapper.map(book,BookDTO.class))
                 .collect(Collectors.toList());
