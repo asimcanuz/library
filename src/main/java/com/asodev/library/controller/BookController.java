@@ -2,7 +2,7 @@ package com.asodev.library.controller;
 
 import com.asodev.library.dto.BookDTO;
 import com.asodev.library.dto.CreateBookDTO;
-import com.asodev.library.service.interfaces.BookService;
+import com.asodev.library.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
