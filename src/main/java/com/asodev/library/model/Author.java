@@ -10,8 +10,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
-    private String lastName;
+    private String name;
 
     @OneToMany(mappedBy = "author")
     private List<Book> books;
@@ -21,10 +20,9 @@ public class Author {
     public Author() {
     }
 
-    public Author(Long id, String firstName, String lastName,List<Book> books,boolean deleted) {
+    public Author(Long id, String name,List<Book> books,boolean deleted) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name=name;
         this.books = books;
         this.deleted = deleted;
     }
@@ -37,20 +35,12 @@ public class Author {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Book> getBooks() {
