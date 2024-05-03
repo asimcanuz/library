@@ -28,6 +28,16 @@ public class AuthorController  {
         return new ResponseEntity<>(createdAuthor, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Yazar Listesi ekle")
+    @PostMapping("/list")
+    public ResponseEntity<?> createAuthorWithList(@RequestBody List<CreateAuthorDTO> createAuthorDTOList){
+        for (CreateAuthorDTO createAuthorDTO : createAuthorDTOList){
+            authorService.createAuthor(createAuthorDTO);
+        }
+
+        return new ResponseEntity<>("Yazarlar Eklendi",HttpStatus.CREATED);
+    }
+
     @Operation(summary = "Id ile yazar getir")
     @GetMapping("/{id}")
     public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable Long id) {
@@ -44,7 +54,7 @@ public class AuthorController  {
 
     @Operation(summary = "Yazar güncelle")
     @PutMapping("/{id}")
-    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Long id, @RequestBody AuthorDTO authorDTO) {
+    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Long id, @RequestBody CreateAuthorDTO authorDTO) {
         AuthorDTO updatedAuthor = authorService.updateAuthor(id, authorDTO);
         return new ResponseEntity<>(updatedAuthor, HttpStatus.OK);
     }

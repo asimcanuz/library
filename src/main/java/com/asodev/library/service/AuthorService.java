@@ -42,9 +42,9 @@ public class AuthorService {
                 .collect(Collectors.toList());
     }
 
-    public AuthorDTO updateAuthor(Long id, AuthorDTO authorDTO) {
+    public AuthorDTO updateAuthor(Long id, CreateAuthorDTO authorDTO) {
         Author author = getAuthor(id);
-        author.setName(author.getName());
+        author.setName(authorDTO.getName());
         author = authorRepository.save(author);
         return modelMapper.map(author,AuthorDTO.class);
     }
