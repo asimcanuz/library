@@ -61,7 +61,7 @@ public class Author {
         this.books = books;
     }
 
-    public boolean getDeleted(){
+    public boolean isDeleted(){
         return deleted;
     }
     public void setDeleted(boolean deleted) {

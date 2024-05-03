@@ -84,7 +84,7 @@ public class Loan {
         this.returnDate = returnDate;
     }
 
-    public boolean getDeleted() {
+    public boolean isDeleted() {
         return deleted;
     }
 
