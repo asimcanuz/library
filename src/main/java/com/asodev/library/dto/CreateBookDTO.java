@@ -7,16 +7,16 @@ public class CreateBookDTO {
     private String title;
     private LocalDate yearPublished;
     private int stock;
-    private AuthorDTO author;
+    private Long authorId;
 
     public CreateBookDTO() {
     }
 
-    public CreateBookDTO(String title, LocalDate yearPublished, int stock, AuthorDTO author) {
+    public CreateBookDTO(String title, LocalDate yearPublished, int stock, Long authorId) {
         this.title = title;
         this.yearPublished = yearPublished;
         this.stock = stock;
-        this.author = author;
+        this.authorId = authorId;
     }
 
     public String getTitle() {
@@ -43,11 +43,11 @@ public class CreateBookDTO {
         this.stock = stock;
     }
 
-    public AuthorDTO getAuthor() {
-        return author;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(AuthorDTO author) {
-        this.author = author;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 }
