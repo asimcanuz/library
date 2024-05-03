@@ -51,6 +51,13 @@ public class LoanController {
         }
     }
 
+    @Operation(summary = "Loan iade et")
+    @PutMapping("/return/{id}")
+    public ResponseEntity<Loan> returnLoan(@PathVariable Long id, @RequestBody Loan loan){
+        Loan returnedLoan = loanService.returnLoan(id, loan);
+        return new ResponseEntity<>(returnedLoan,HttpStatus.OK);
+    }
+
     @Operation(summary = "Loan sil")
     @PatchMapping("/{id}")
     public ResponseEntity<Void> deleteLoan(@PathVariable Long id){

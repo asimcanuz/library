@@ -1,17 +1,22 @@
 package com.asodev.library.service;
 
+import com.asodev.library.model.Book;
 import com.asodev.library.model.Loan;
+import com.asodev.library.repository.BookRepository;
 import com.asodev.library.repository.LoanRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 @Service
 public class LoanService {
 
     private final LoanRepository loanRepository;
+    private final BookRepository bookRepository;
 
-    public LoanService(LoanRepository loanRepository) {
+    public LoanService(LoanRepository loanRepository, BookRepository bookRepository) {
         this.loanRepository = loanRepository;
+        this.bookRepository = bookRepository;
     }
 
     public Loan createLoan(Loan loan) {
@@ -33,6 +38,12 @@ public class LoanService {
     public void deleteLoan(Long id) {
         Loan loan = getLoan(id);
         loan.setDeleted(true);
+
+        // eğer loan silinirse kitap loan false;
+        Book book = loan.getBook();
+        book.setLoaned(false);
+        bookRepository.save(book);
+
         loanRepository.save(loan);
     }
     private Loan getLoan(Long id) {
@@ -42,9 +53,23 @@ public class LoanService {
 
     public Loan updateLoan(Long id, Loan loan){
         Loan existingLoan = getLoan(id);
+
         existingLoan.setLoanDate(loan.getLoanDate());
         existingLoan.setDueDate(loan.getDueDate());
         existingLoan.setReturnDate(loan.getReturnDate());
+
+        return loanRepository.save(existingLoan);
+    }
+
+    public Loan returnLoan(Long id, Loan loan){
+        Loan existingLoan = getLoan(id);
+
+        existingLoan.setReturnDate(LocalDate.now());
+        existingLoan.getBook().setLoaned(false);
+
+        Book book = loan.getBook();
+        book.setLoaned(true);
+        bookRepository.save(book);
 
         return loanRepository.save(existingLoan);
     }
