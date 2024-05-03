@@ -43,10 +43,8 @@ public class AuthorService {
 
     public AuthorDTO updateAuthor(Long id, AuthorDTO authorDTO) {
         Author author = getAuthor(id);
-        author.setFirstName(authorDTO.getFirstName());
-        author.setLastName(authorDTO.getLastName());
+        author.setName(author.getName());
         author = authorRepository.save(author);
-
         return modelMapper.map(author,AuthorDTO.class);
     }
 
