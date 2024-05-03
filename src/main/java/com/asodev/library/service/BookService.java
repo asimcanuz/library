@@ -6,7 +6,9 @@ import com.asodev.library.dto.BookDTO;
 import com.asodev.library.dto.CreateBookDTO;
 import com.asodev.library.model.Author;
 import com.asodev.library.model.Book;
+import com.asodev.library.repository.AuthorRepository;
 import com.asodev.library.repository.BookRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ import java.util.stream.Collectors;
 public class BookService {
 
     private  final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
     private final ModelMapper modelMapper;
-    public BookService(BookRepository bookRepository, ModelMapper modelMapper) {
-        this.bookRepository = bookRepository;
+    public BookService(ModelMapper modelMapper, BookRepository bookRepository, AuthorRepository authorRepository) {
         this.modelMapper = modelMapper;
+        this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
 
     public List<BookDTO> getAllBooks(){
@@ -56,25 +60,29 @@ public class BookService {
 
 
     public BookDTO createBook(CreateBookDTO bookDTO) {
+
+        Author author = authorRepository.findById(bookDTO.getAuthorId())
+                .orElseThrow(()-> new EntityNotFoundException("Yazar Bulunamadı."));
+
         Book book = modelMapper.map(bookDTO,Book.class);
+        book.setAuthor(author);
         book = bookRepository.save(book);
+
         return modelMapper.map(book,BookDTO.class);
     }
 
-    public BookDTO updateBook(Long id, BookDTO bookDTO) {
+    public BookDTO updateBook(Long id, CreateBookDTO bookDTO) {
         Book book = getBook(id);
+
         // Update book properties with new values
         book.setTitle(bookDTO.getTitle());
         book.setYearPublished(bookDTO.getYearPublished());
         book.setStock(bookDTO.getStock());
-        // author
-        AuthorDTO authorDTO = bookDTO.getAuthor();
-        Author author = new Author();
-        author.setId(authorDTO.getId());
-        author.setFirstName(authorDTO.getFirstName());
-        author.setLastName(authorDTO.getLastName());
 
+        // author
+        Author author = authorRepository.findById(bookDTO.getAuthorId()).orElseThrow(()-> new EntityNotFoundException("Yazar Bulunamadı"));
         book.setAuthor(author);
+
         // Save the updated book
         book = bookRepository.save(book);
         return modelMapper.map(book,BookDTO.class);

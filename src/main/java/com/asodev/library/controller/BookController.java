@@ -62,7 +62,7 @@ public class BookController{
 
     @Operation(summary = "Kitap güncelle")
     @PutMapping("/{id}")
-    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody CreateBookDTO bookDTO) {
         BookDTO updatedBook = bookService.updateBook(id, bookDTO);
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
