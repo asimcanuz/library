@@ -24,7 +24,8 @@ public class AuthorService {
 
 
     public AuthorDTO createAuthor(CreateAuthorDTO createAuthorDto) {
-        Author author = modelMapper.map(createAuthorDto,Author.class);
+        Author author = new Author();
+        author.setName(createAuthorDto.getName());
         author = authorRepository.save(author);
         return modelMapper.map(author,AuthorDTO.class);
     }

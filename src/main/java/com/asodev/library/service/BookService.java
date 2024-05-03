@@ -60,11 +60,16 @@ public class BookService {
 
     public BookDTO createBook(CreateBookDTO bookDTO) {
 
-        Author author = authorRepository.findById(bookDTO.getAuthorId())
+        Author author = authorRepository.findByIdAndDeletedFalse(bookDTO.getAuthorId())
                 .orElseThrow(()-> new ResourceNotFoundException("Yazar Bulunamadı."));
 
-        Book book = modelMapper.map(bookDTO,Book.class);
+        Book book = new Book();
+
+        book.setTitle(bookDTO.getTitle());
+        book.setYearPublished(bookDTO.getYearPublished());
+        book.setStock(bookDTO.getStock());
         book.setAuthor(author);
+
         book = bookRepository.save(book);
 
         return modelMapper.map(book,BookDTO.class);
