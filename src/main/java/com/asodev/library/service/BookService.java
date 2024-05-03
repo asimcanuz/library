@@ -4,6 +4,7 @@ package com.asodev.library.service;
 import com.asodev.library.dto.AuthorDTO;
 import com.asodev.library.dto.BookDTO;
 import com.asodev.library.dto.CreateBookDTO;
+import com.asodev.library.exception.ResourceNotFoundException;
 import com.asodev.library.model.Author;
 import com.asodev.library.model.Book;
 import com.asodev.library.repository.AuthorRepository;
@@ -62,7 +63,7 @@ public class BookService {
     public BookDTO createBook(CreateBookDTO bookDTO) {
 
         Author author = authorRepository.findById(bookDTO.getAuthorId())
-                .orElseThrow(()-> new EntityNotFoundException("Yazar Bulunamadı."));
+                .orElseThrow(()-> new ResourceNotFoundException("Yazar Bulunamadı."));
 
         Book book = modelMapper.map(bookDTO,Book.class);
         book.setAuthor(author);
@@ -95,6 +96,6 @@ public class BookService {
     }
     private Book getBook(Long id) {
         return bookRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new IllegalArgumentException(id + "id'li kitap bulunamadı."));
+                .orElseThrow(() -> new ResourceNotFoundException(id + "id'li kitap bulunamadı."));
     }
 }

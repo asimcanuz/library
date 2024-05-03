@@ -2,6 +2,7 @@ package com.asodev.library.service;
 
 import com.asodev.library.dto.AuthorDTO;
 import com.asodev.library.dto.CreateAuthorDTO;
+import com.asodev.library.exception.ResourceNotFoundException;
 import com.asodev.library.model.Author;
 import com.asodev.library.repository.AuthorRepository;
 import org.modelmapper.ModelMapper;
@@ -57,6 +58,6 @@ public class AuthorService {
 
     private Author getAuthor(Long id){
         return authorRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(()->new IllegalArgumentException(id+" id'li yazar bulunamadı!"));
+                .orElseThrow(()->new ResourceNotFoundException(id+" id'li yazar bulunamadı!"));
     }
 }

@@ -1,5 +1,6 @@
 package com.asodev.library.service;
 
+import com.asodev.library.exception.ResourceNotFoundException;
 import com.asodev.library.model.Book;
 import com.asodev.library.model.Loan;
 import com.asodev.library.repository.BookRepository;
@@ -48,7 +49,7 @@ public class LoanService {
     }
     private Loan getLoan(Long id) {
         return loanRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new IllegalArgumentException(id + "id'li kitap bulunamadı."));
+                .orElseThrow(() -> new ResourceNotFoundException(id + "id'li kitap bulunamadı."));
     }
 
     public Loan updateLoan(Long id, Loan loan){

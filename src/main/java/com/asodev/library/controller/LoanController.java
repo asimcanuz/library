@@ -43,12 +43,8 @@ public class LoanController {
     @Operation(summary = "Loan güncelle")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateLoan(@PathVariable Long id, @RequestBody Loan loan){
-        try{
-            Loan updatedLoan = loanService.updateLoan(id,loan);
-            return new ResponseEntity<>(updatedLoan,HttpStatus.OK);
-        }catch (RuntimeException e){
-            return ResponseEntity.notFound().build();
-        }
+        Loan updatedLoan = loanService.updateLoan(id,loan);
+        return new ResponseEntity<>(updatedLoan,HttpStatus.OK);
     }
 
     @Operation(summary = "Loan iade et")
