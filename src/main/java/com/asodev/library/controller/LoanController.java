@@ -1,7 +1,6 @@
 package com.asodev.library.controller;
 
 import com.asodev.library.model.Loan;
-import com.asodev.library.repository.LoanRepository;
 import com.asodev.library.service.LoanService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
