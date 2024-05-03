@@ -2,7 +2,7 @@ package com.asodev.library.controller;
 
 import com.asodev.library.dto.AuthorDTO;
 import com.asodev.library.dto.CreateAuthorDTO;
-import com.asodev.library.service.interfaces.AuthorService;
+import com.asodev.library.service.AuthorService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
