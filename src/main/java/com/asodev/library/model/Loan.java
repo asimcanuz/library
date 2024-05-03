@@ -20,17 +20,20 @@ public class Loan {
     private LocalDate dueDate;
     private LocalDate returnDate;
 
+    private boolean deleted = false;
+
 
     public Loan() {
     }
 
-    public Loan(Long id, Member member, Book book, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate) {
+    public Loan(Long id, Member member, Book book, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, boolean deleted) {
         this.id = id;
         this.member = member;
         this.book = book;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
         this.returnDate = returnDate;
+        this.deleted = deleted;
     }
 
     public Long getId() {
@@ -79,5 +82,13 @@ public class Loan {
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }
