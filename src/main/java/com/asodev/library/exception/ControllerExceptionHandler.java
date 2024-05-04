@@ -20,7 +20,9 @@ public class ControllerExceptionHandler {
                 req.getDescription(false)
         );
         return new ResponseEntity<ErrorMessage>(message,HttpStatus.NOT_FOUND);
-    }    @ExceptionHandler(Exception.class)
+    }
+
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> globalExceptionHandler(Exception ex, WebRequest req){
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.NOT_FOUND.value(),
