@@ -8,16 +8,19 @@ public class BookDTO {
     private int stock;
     private AuthorDTO author;
 
+    private boolean loaned;
+
     // Constructors, getters, and setters
     public BookDTO() {
     }
 
-    public BookDTO(Long id, String title, LocalDate yearPublished, int stock, AuthorDTO author) {
+    public BookDTO(Long id, String title, LocalDate yearPublished, int stock, AuthorDTO author, boolean loaned) {
         this.id = id;
         this.title = title;
         this.yearPublished = yearPublished;
         this.stock = stock;
         this.author = author;
+        this.loaned = loaned;
     }
 
     // Getters and setters
@@ -59,5 +62,13 @@ public class BookDTO {
 
     public void setAuthor(AuthorDTO author) {
         this.author = author;
+    }
+
+    public boolean isLoaned() {
+        return loaned;
+    }
+
+    public void setLoaned(boolean loaned) {
+        this.loaned = loaned;
     }
 }
