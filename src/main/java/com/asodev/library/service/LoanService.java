@@ -21,7 +21,7 @@ public class LoanService {
     }
 
     public Loan createLoan(Loan loan) {
-        if (getNumberOfLoansByUser(loan.getMember().getId())>3) {
+        if (getNumberOfLoansByUser(loan.getUser().getId())>3) {
             throw new RuntimeException("En fazla 3 kitap ödünç alabilirsiniz.");
         }
         return loanRepository.save(loan);

@@ -11,7 +11,7 @@ public class Loan {
     private Long id;
 
     @ManyToOne
-    private Member member;
+    private User user;
 
     @ManyToOne
     private Book book;
@@ -26,9 +26,9 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(Long id, Member member, Book book, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, boolean deleted) {
+    public Loan(Long id, User user, Book book, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, boolean deleted) {
         this.id = id;
-        this.member = member;
+        this.user = user;
         this.book = book;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
@@ -44,12 +44,12 @@ public class Loan {
         this.id = id;
     }
 
-    public Member getMember() {
-        return member;
+    public User getUser() {
+        return user;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setMember(User user) {
+        this.user = user;
     }
 
     public Book getBook() {
