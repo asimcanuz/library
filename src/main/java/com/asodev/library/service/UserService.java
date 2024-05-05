@@ -37,6 +37,7 @@ public class UserService implements UserDetailsService {
                 .password(bCryptPasswordEncoder.encode(request.password()))
                 .authorities(request.roles())
                 .build();
+
         System.out.println(newUser.toString());
         return userRepository.save(newUser);
     }
