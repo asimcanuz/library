@@ -1,14 +1,21 @@
 package com.asodev.library.service;
 
+import com.asodev.library.dto.CreateLoanDto;
 import com.asodev.library.exception.ResourceNotFoundException;
 import com.asodev.library.model.Book;
 import com.asodev.library.model.Loan;
+import com.asodev.library.model.User;
 import com.asodev.library.repository.BookRepository;
 import com.asodev.library.repository.LoanRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class LoanService {
 
@@ -20,10 +27,25 @@ public class LoanService {
         this.bookRepository = bookRepository;
     }
 
-    public Loan createLoan(Loan loan) {
-        if (getNumberOfLoansByUser(loan.getUser().getId())>3) {
+    public Loan createLoan(CreateLoanDto createLoanDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        Long userId = user.getId();
+
+        if (getNumberOfLoansByUser(userId)>3) {
             throw new RuntimeException("En fazla 3 kitap ödünç alabilirsiniz.");
         }
+
+        Loan loan = new Loan();
+        loan.setLoanDate(LocalDate.now());
+        loan.setDueDate(LocalDate.now().plusDays(14));
+        loan.setUser(user);
+
+        Book book = bookRepository.findById(createLoanDto.bookId())
+                .orElseThrow(()-> new ResourceNotFoundException("Hatalı Kitap"));
+        loan.setBook(book);
+
+
         return loanRepository.save(loan);
     }
 

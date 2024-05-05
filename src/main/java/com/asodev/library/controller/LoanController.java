@@ -1,5 +1,6 @@
 package com.asodev.library.controller;
 
+import com.asodev.library.dto.CreateLoanDto;
 import com.asodev.library.model.Loan;
 import com.asodev.library.service.LoanService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +35,7 @@ public class LoanController {
 
     @Operation(summary = "Yeni loan oluştur")
     @PostMapping
-    public ResponseEntity<Loan> createLoan(Loan loan){
+    public ResponseEntity<Loan> createLoan(CreateLoanDto loan){
         Loan newLoan = loanService.createLoan(loan);
         return new ResponseEntity<>(newLoan,HttpStatus.CREATED);
     }
