@@ -24,9 +24,9 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 public class SecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {
-            "/api/auth",
+            "/api/auth/**",
             "/v2/api-docs",
-            "/v3/api-docs",
+            "/v3/api-docs/**",
             "/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",
@@ -53,8 +53,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth-> auth
                         .requestMatchers(WHITE_LIST_URL).permitAll()
-                        .anyRequest().authenticated()
                 )
+                .authorizeHttpRequests(auth->auth
+                        .requestMatchers("/api/author/**","/api/loan/**","api/book/**").authenticated())
+
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -62,7 +64,9 @@ public class SecurityConfig {
                         logout.logoutUrl("/api/auth/logout")
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+
                 )
+                .formLogin(AbstractHttpConfigurer::disable)
                 .build();
     }
 
