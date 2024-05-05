@@ -11,8 +11,7 @@ import java.util.Optional;
 public interface LoanRepository extends JpaRepository<Loan,Long> {
     Optional<Loan> findByIdAndDeletedFalse(Long id);
 
-
-    int countByMemberIdAndDeletedFalse(Long userId);
+    int countByUserIdAndDeletedFalse(Long userId);
 
     List<Loan> findAllByDeletedFalse();
 }

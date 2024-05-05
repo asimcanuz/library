@@ -77,7 +77,7 @@ public class LoanService {
 
 
     private int getNumberOfLoansByUser(Long userId){
-        return loanRepository.countByMemberIdAndDeletedFalse(userId);
+        return loanRepository.countByUserIdAndDeletedFalse(userId);
     }
 
 }
