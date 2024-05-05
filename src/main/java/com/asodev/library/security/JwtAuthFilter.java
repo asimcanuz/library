@@ -1,5 +1,6 @@
 package com.asodev.library.security;
 
+import com.asodev.library.repository.TokenRepository;
 import com.asodev.library.service.JwtService;
 import com.asodev.library.service.UserService;
 import jakarta.servlet.FilterChain;
@@ -10,6 +11,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,10 +22,12 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserService userService;
+    private final TokenRepository tokenRepository;
 
-    public JwtAuthFilter(JwtService jwtService, UserService userService) {
+    public JwtAuthFilter(JwtService jwtService, UserService userService, TokenRepository tokenRepository) {
         this.jwtService = jwtService;
         this.userService = userService;
+        this.tokenRepository = tokenRepository;
     }
 
 
@@ -32,6 +36,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
+        if (request.getServletPath().contains("/api/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
@@ -44,7 +53,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails user = userService.loadUserByUsername(username);
             System.out.println("User loaded :  " + user);
-            if (jwtService.validateToken(token, user)) {
+
+            var isTokenValid = tokenRepository.findByToken(token)
+                    .map(t -> !t.isExpired() && !t.isRevoked())
+                    .orElse(false);
+
+            if (jwtService.validateToken(token, user) && isTokenValid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
