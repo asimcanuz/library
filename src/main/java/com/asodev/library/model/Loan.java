@@ -11,9 +11,11 @@ public class Loan {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
 
     private LocalDate loanDate;
@@ -91,4 +93,6 @@ public class Loan {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
+
+
 }

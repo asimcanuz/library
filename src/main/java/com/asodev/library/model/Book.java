@@ -3,6 +3,7 @@ package com.asodev.library.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -17,18 +18,22 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Loan> loans;
+
     private boolean deleted = false;
     private boolean loaned = false;
 
     public Book() {
     }
 
-    public Book(Long id, String title, LocalDate yearPublished, int stock, Author author, boolean deleted,boolean loaned) {
+    public Book(Long id, String title, LocalDate yearPublished, int stock, Author author, List<Loan> loans, boolean deleted, boolean loaned) {
         this.id = id;
         this.title = title;
         this.yearPublished = yearPublished;
         this.stock = stock;
         this.author = author;
+        this.loans = loans;
         this.deleted = deleted;
         this.loaned = loaned;
     }
@@ -91,5 +96,13 @@ public class Book {
 
     public void setLoaned(boolean loaned) {
         this.loaned = loaned;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
     }
 }

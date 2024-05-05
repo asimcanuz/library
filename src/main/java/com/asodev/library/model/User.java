@@ -3,6 +3,7 @@ package com.asodev.library.model;
 import jakarta.persistence.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,9 @@ public class User implements UserDetails {
     private String email;
     private String username;
     private String password;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Loan> loans;
 
     private boolean accountNonExpired;
     private boolean isEnabled;
@@ -175,6 +179,7 @@ public class User implements UserDetails {
         private boolean credentialsNonExpired=true;
 
         private Set<Role> authorities;
+
 
         public Builder(){
         }
