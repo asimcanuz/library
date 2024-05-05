@@ -1,4 +1,4 @@
-package com.asodev.library.dto;
+package com.asodev.library.dto.loan;
 
 import com.asodev.library.model.Book;
 import jakarta.validation.constraints.NotBlank;

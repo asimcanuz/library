@@ -23,12 +23,13 @@ public class Loan {
     private LocalDate returnDate;
 
     private boolean deleted = false;
+    private boolean loaned = false;
 
 
     public Loan() {
     }
 
-    public Loan(Long id, User user, Book book, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, boolean deleted) {
+    public Loan(Long id, User user, Book book, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, boolean deleted,boolean loaned) {
         this.id = id;
         this.user = user;
         this.book = book;
@@ -94,5 +95,11 @@ public class Loan {
         this.deleted = deleted;
     }
 
+    public boolean isLoaned() {
+        return loaned;
+    }
 
+    public void setLoaned(boolean loaned) {
+        this.loaned = loaned;
+    }
 }
