@@ -5,10 +5,7 @@ import com.asodev.library.dto.CreateAuthorDTO;
 import com.asodev.library.dto.CreateBookDTO;
 import com.asodev.library.dto.SignupRequest;
 import com.asodev.library.model.Role;
-import com.asodev.library.service.AuthorService;
-import com.asodev.library.service.BookService;
-import com.asodev.library.service.JwtService;
-import com.asodev.library.service.UserService;
+import com.asodev.library.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +24,7 @@ public class LibraryApplication {
 
     @Bean
     public CommandLineRunner commandLineRunner(
-            UserService userService,
+            AuthenticationService authenticationService,
             BookService bookService,
             AuthorService authorService
     ) {
@@ -42,7 +39,7 @@ public class LibraryApplication {
                     "admin@mail.com",
                     Set.of(Role.ROLE_ADMIN)
             );
-            userService.createUser(admin);
+            authenticationService.register(admin);
 
             var user = new SignupRequest(
                     "user",
@@ -52,7 +49,7 @@ public class LibraryApplication {
                     "user@mail.com",
                     Set.of(Role.ROLE_ADMIN)
             );
-            userService.createUser(user);
+            authenticationService.register(user);
 
             var author = new CreateAuthorDTO("author1");
             AuthorDTO authorDTO = authorService.createAuthor(author);

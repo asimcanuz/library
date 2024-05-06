@@ -38,6 +38,7 @@ public class UserService implements UserDetailsService {
                 .authorities(request.roles())
                 .build();
 
+
         System.out.println(newUser.toString());
         return userRepository.save(newUser);
     }

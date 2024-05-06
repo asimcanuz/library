@@ -36,10 +36,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> authorities;
 
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
+
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String username, String password, List<Loan> loans, boolean accountNonExpired, boolean isEnabled, boolean accountNonLocked, boolean credentialsNonExpired, Set<Role> authorities) {
+    public User(Long id, String firstName, String lastName, String email, String username, String password, List<Loan> loans, boolean accountNonExpired, boolean isEnabled, boolean accountNonLocked, boolean credentialsNonExpired, Set<Role> authorities, List<Token> tokens) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,6 +56,7 @@ public class User implements UserDetails {
         this.accountNonLocked = accountNonLocked;
         this.credentialsNonExpired = credentialsNonExpired;
         this.authorities = authorities;
+        this.tokens = tokens;
     }
 
     public User(Builder builder) {
@@ -169,6 +174,7 @@ public class User implements UserDetails {
     public void setLoans(List<Loan> loans) {
         this.loans = loans;
     }
+
 
     public static class Builder{
 

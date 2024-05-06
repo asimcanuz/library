@@ -1,48 +1,43 @@
 package com.asodev.library.controller;
 
+import com.asodev.library.dto.AuthenticationResponse;
 import com.asodev.library.dto.LoginRequest;
 import com.asodev.library.dto.SignupRequest;
-import com.asodev.library.model.User;
-import com.asodev.library.service.JwtService;
-import com.asodev.library.service.UserService;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.asodev.library.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final UserService userService;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
+    private final AuthenticationService authenticationService;
 
-
-    public AuthController(UserService userService, JwtService jwtService, AuthenticationManager authenticationManager) {
-        this.userService = userService;
-        this.jwtService = jwtService;
-        this.authenticationManager = authenticationManager;
+    public AuthController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/addNewUser")
-    public User addUser(@RequestBody SignupRequest request){
-        return userService.createUser(request);
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody SignupRequest signupRequest){
+        return new ResponseEntity<>(authenticationService.register(signupRequest), HttpStatus.CREATED);
     }
-    @PostMapping("/generateToken")
-    public String generateToken(@RequestBody LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.username(), request.password()));
-        System.out.println(authentication);
-        if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken(request.username());
-            System.out.println("token:" + token);
-            return token;
-        }
-        throw new UsernameNotFoundException("invalid username {} " + request.username());
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody LoginRequest loginRequest){
+        return new ResponseEntity<>(authenticationService.authenticate(loginRequest),HttpStatus.OK);
+    }
+
+    @PostMapping("/refresh-token")
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        authenticationService.refreshToken(request, response);
     }
 
 }
