@@ -1,28 +1,15 @@
-# Base image for PostgreSQL
-FROM postgres:latest
-
-# Set environment variables
-ENV POSTGRES_DB=mydb
-ENV POSTGRES_USER=myuser
-ENV POSTGRES_PASSWORD=mypassword
-
-# Expose the PostgreSQL port
-EXPOSE 5432
-
 # Base image for Java application
-FROM adoptium/openjdk:17-slim
+FROM openjdk:17-jdk-slim
 
-# Set working directory inside the container
-WORKDIR /app
+# Update package list and install Maven
+RUN apt-get update && \
+    apt-get install -y maven
 
-## Copy application code
+# Copy application code
 COPY . .
 
-# Install Maven dependencies (adjust based on your build tool)
+# Install Maven dependencies
 RUN mvn clean install
-
-# Expose the port your application runs on
-EXPOSE 8080
 
 # Command to run the application
 CMD ["java", "-jar", "library.jar"]

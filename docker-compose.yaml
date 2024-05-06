@@ -1,9 +1,16 @@
 version: '3.9'
 
 services:
+  app:
+    container_name: library
+    image: library
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+        - postgres
   postgres:
     image: postgres:latest
-    container_name: my_postgres
     environment:
       POSTGRES_DB: mydb
       POSTGRES_USER: myuser
