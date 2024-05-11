@@ -54,7 +54,7 @@ public class AuthenticationService {
         var refreshToken = jwtService.generateRefreshToken(savedUser.getUsername());
         saveUserToken(savedUser, jwtToken);
 
-        return new AuthenticationResponse(jwtToken, refreshToken);
+        return new AuthenticationResponse(jwtToken, refreshToken, savedUser.getUsername(), savedUser.getAuthorities());
     }
 
     public AuthenticationResponse authenticate(LoginRequest request) {
@@ -71,7 +71,7 @@ public class AuthenticationService {
 
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        return new AuthenticationResponse(jwtToken, refreshToken);
+        return new AuthenticationResponse(jwtToken, refreshToken, user.getUsername(), user.getAuthorities());
     }
 
 
@@ -116,7 +116,7 @@ public class AuthenticationService {
                 var accessToken = jwtService.generateToken(username);
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
-                var authResponse = new AuthenticationResponse(accessToken, refreshToken);
+                var authResponse = new AuthenticationResponse(accessToken, refreshToken,username, user.getAuthorities());
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
 
