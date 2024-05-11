@@ -47,7 +47,7 @@ public class LibraryApplication {
                     "user",
                     "user",
                     "user@mail.com",
-                    Set.of(Role.ROLE_ADMIN)
+                    Set.of(Role.ROLE_USER)
             );
             authenticationService.register(user);
 
